@@ -49,7 +49,11 @@ export class Crawler {
   }
 
   private async processUrl (url: string, depth: number): Promise<Link[]> {
-    const { text, links } = await this.urlLoader.loadUrlTextAndLinks(url)
+    const output = await this.urlLoader.loadUrlTextAndLinks(url)
+    if (output == null) { return [] }
+
+    const { text, links } = output
+
     const count = this.countWord(text)
     this.count += count
 
