@@ -12,7 +12,7 @@ describe('App', () => {
 
   it('should call url loader and return 0 when word not present', async () => {
     // given
-    urlLoader.loadUrlTextAndLinks.mockResolvedValue({ text: 'web site text', links: [] })
+    urlLoader.loadUrlTextAndLinks.mockResolvedValue({ text: 'text', links: [] })
     mockConsole()
 
     // when
@@ -25,7 +25,7 @@ describe('App', () => {
     expect(console.log).toHaveBeenCalledWith('Found 0 instances of \'kayako\' in the body of the page')
   })
 
-  it('should call url loader and return count when word present', async () => {
+  it('should call crawler and return count when word present', async () => {
     // given
     urlLoader.loadUrlTextAndLinks.mockResolvedValue({ text: 'kayako Kayako text', links: [] })
     mockConsole()
