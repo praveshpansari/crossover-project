@@ -1,5 +1,5 @@
-import { UrlLoaderService } from '../services/url-loader.service'
-import { getValidUrl } from '../services/url-validator.service'
+import { UrlLoaderService } from '../services/url-loader.service.js'
+import { getValidUrl } from '../services/url-validator.service.js'
 
 interface Link {
   url: string
