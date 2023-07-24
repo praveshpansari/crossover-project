@@ -21,12 +21,18 @@ export class UrlLoaderService {
   private constructor (private readonly browser: Browser) {
   }
 
-  async loadUrlTextAndLinks (url: string): Promise<TextAndLinks> {
+  async loadUrlTextAndLinks (url: string): Promise<TextAndLinks | null> {
     const page = await this.browser.newPage()
-    await page.goto(url)
-    await page.waitForSelector('body')
-    const [text, links] = await Promise.all([await pageEval(page, domExtractText), await pageEval(page, domExtractHyperlinks)])
-
-    return { text, links }
+    try {
+      await page.goto(url)
+      await page.waitForSelector('body')
+      const [text, links] = await Promise.all([await pageEval(page, domExtractText), await pageEval(page, domExtractHyperlinks)])
+      return { text, links }
+    } catch {
+      console.error('Invalid URL:' + url)
+      return null
+    } finally {
+      await page.close()
+    }
   }
 }
