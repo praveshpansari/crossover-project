@@ -68,7 +68,7 @@ describe('Crawler', () => {
   it('should ignore invalid urls', async () => {
     // given
     const instance = new Crawler(urlLoader, testUrl, 2, 'kayako')
-    urlLoader.loadUrlTextAndLinks.mockResolvedValueOnce({ text: pageContent, links: ['mailto:link'] })
+    urlLoader.loadUrlTextAndLinks.mockResolvedValueOnce({ text: pageContent, links: [testUrl + '/rtech.pdf', 'mailto:link'] })
 
     // when
     await instance.crawlUsingBfs()

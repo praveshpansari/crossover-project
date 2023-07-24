@@ -24,6 +24,22 @@ describe('UrlLoaderService', () => {
     expect(instance1).toBe(instance2)
   })
 
+  it('should handle invlaid url', async () => {
+    // given
+    pageMock.evaluate.mockRejectedValueOnce('Error: Cant read pdf')
+
+    // when
+    const instance = await UrlLoaderService.getInstance()
+    const stringPromise = instance.loadUrlTextAndLinks(testUrl + 'rtech.pdf')
+
+    // then
+    await expect(stringPromise).resolves.toBeNull()
+
+    expect(mockBrowser.newPage).toHaveBeenCalledTimes(1)
+    expect(pageMock.goto).toHaveBeenCalledTimes(1)
+    expect(pageMock.goto).toHaveBeenCalledWith(testUrl + 'rtech.pdf')
+  })
+
   it('should load website text and links', async () => {
     // given
     pageMock.evaluate.mockResolvedValueOnce(pageValue)
